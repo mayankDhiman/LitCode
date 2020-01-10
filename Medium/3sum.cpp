@@ -1,29 +1,32 @@
-// TLE in two cases
-
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         set < vector <int> > result;
+        sort(nums.begin(), nums.end());
         for (int i = 0; i < nums.size(); i ++)
         {
-            int two_sum = -nums[i];
-            set <int> complements; 
-            for (int j = 0; j < nums.size(); j ++)
+            int target = - nums[i];
+            int l = i + 1, r = nums.size() - 1;          
+            while (l < r)
             {
-                if (j != i)
+                vector <int> sett(3);
+                if (nums[l] + nums[r] < target) l += 1;
+                else if (nums[l] + nums[r] > target) r -= 1;
+                else 
                 {
-                    if (binary_search(complements.begin(), complements.end(), nums[j]))
-                    {
-                        vector <int> set{-two_sum, nums[j], two_sums - nums[j]};
-                        sort(set.begin(), set.end());
-                        result.insert(set);
-                    }
-                    else
-                    {
-                        complements.insert(two_sum - nums[j]);
-                    }
-                }
+
+                    sett[0] = nums[i];
+                    sett[1] = nums[l];
+                    sett[2] = nums[r];
+                    sort(sett.begin(), sett.end());
+                    result.insert(sett);
+                    l += 1;
+                    r -= 1;
+                }                
+                while(l < r && nums[l] == sett[1])  l += 1;
+                while(l < r && nums[r] == sett[2])  r -= 1;
             }
+            while(i + 1 < nums.size() && nums[i + 1] == nums[i])    i += 1;        
         }
         vector <vector <int>> _result(result.begin(), result.end());
         return _result;
